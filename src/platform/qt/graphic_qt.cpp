@@ -32,7 +32,7 @@ namespace tex {
 QString wstring_to_QString(const std::wstring& ws)
 {
   QString out = QString::fromStdWString(ws);
-  auto index = out.indexOf(QChar('\0'));
+  auto index = out.indexOf(QChar(u'\0'));
   if (index != -1)
     out.truncate(index);
   return out;
@@ -59,7 +59,7 @@ Font_qt::Font_qt(const string& file, float size)
 
   QString filename(QString::fromStdString(file));
   if(!QFile::exists(filename)) {
-      filename.prepend(":/");
+      filename.prepend(QStringLiteral(":/"));
 //      qInfo() << "new filename" << filename;
   }
 
