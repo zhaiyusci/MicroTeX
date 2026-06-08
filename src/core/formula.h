@@ -105,6 +105,13 @@ public:
 
   Formula(const std::wstring& latex, bool preprocess);
 
+  Formula(
+    const std::wstring& latex,
+    const std::string& textStyle,
+    bool preprocess,
+    bool isMathMode
+  );
+
   /**
    * Change the text of the Formula and regenerate the root atom.
    *

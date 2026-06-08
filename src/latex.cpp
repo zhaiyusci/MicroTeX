@@ -149,3 +149,19 @@ TeXRender* LaTeX::parse(const wstring& latex, int width, float textSize, float l
       .build(*_formula);
   return render;
 }
+
+TeXRender* LaTeX::parseText(const wstring& latex, int width, float textSize, float lineSpace, color fg) {
+  bool lined = true;
+  Alignment align = Alignment::left;
+  Formula formula(latex, "mathnormal", true, false);
+  formula._root = sptrOf<RomanAtom>(formula._root);
+  TeXRender* render =
+    _builder->setStyle(TexStyle::display)
+      .setTextSize(textSize)
+      .setWidth(UnitType::pixel, width, align)
+      .setIsMaxWidth(lined)
+      .setLineSpace(UnitType::pixel, lineSpace)
+      .setForeground(fg)
+      .build(formula);
+  return render;
+}

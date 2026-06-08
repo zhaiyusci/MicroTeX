@@ -191,7 +191,8 @@ sptr<Box> RowAtom::createBox(Environment& env) {
     auto* cb = dynamic_cast<CharBox*>(b.get());
     if (cb != nullptr
         && !atom->isCharInMathMode()
-        && dynamic_cast<CharSymbol*>(nextAtom.get()) != nullptr
+        && nextAtom != nullptr
+        && dynamic_cast<CharSymbol*>(nextAtom.get()) == nullptr
       ) {
       // When we have a single char, we need to add italic correction
       // As an example: (TVY) looks crappy...

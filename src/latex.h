@@ -52,6 +52,20 @@ public:
   static TeXRender* parse(const std::wstring& tex, int width, float textSize, float lineSpace, color fg);
 
   /**
+   * Parse TeX formatted text to TeXRender.
+   *
+   * The top-level parser starts in text mode, while $...$, $$...$$, \( ... \),
+   * and \[ ... \] switch back to math mode inside the text.
+   *
+   * @param tex the TeX formatted text string
+   * @param width the width of the 2D graphics context
+   * @param textSize the text size
+   * @param lineSpace the line space
+   * @param fg the foreground color
+   */
+  static TeXRender* parseText(const std::wstring& tex, int width, float textSize, float lineSpace, color fg);
+
+  /**
    * Release the LaTeX context
    */
   static void release();

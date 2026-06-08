@@ -452,7 +452,6 @@ void TeXParser::getOptsArgs(int argc, int opts, Args& args) {
     for (int i = 2; i <= argc; i++) {
       getArg(i);
     }
-    if (_isMathMode) skipWhiteSpace();
   }
 }
 
@@ -794,13 +793,9 @@ void TeXParser::parse() {
     ch = _latex[_pos];
 
     switch (ch) {
-      case '\n':
-        _line++;
-        _col = _pos;
       case '\t':
       case '\r':
-        _pos++;
-        break;
+      case '\n':
       case ' ': {
         _pos++;
         if (!_isMathMode) {  // we are in mbox
@@ -808,9 +803,16 @@ void TeXParser::parse() {
           _formula->add(sptrOf<BreakMarkAtom>());
           while (_pos < _len) {
             ch = _latex[_pos];
-            if (ch != ' ' || ch != '\t' || ch != '\r') break;
+            if (ch != ' ' && ch != '\t' && ch != '\r' && ch != '\n') break;
+            if (ch == '\n') {
+              _line++;
+              _col = _pos;
+            }
             _pos++;
           }
+        } else if (ch == '\n') {
+          _line++;
+          _col = _pos - 1;
         }
       }
         break;
